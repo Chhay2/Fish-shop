@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->string('customerName');
+            $table->string('status');
+            $table->double('tolal_price');
             $table->timestamps();
         });
     }

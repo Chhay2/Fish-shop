@@ -10,22 +10,35 @@ class ProdutController extends Controller
     //insert
     public function InsertProduct(Request $request)
     {
-        $product = new Products();
-        $validateDate = $request->validate([
+        // Validate incoming request
+        $request->validate([
             'name' => 'required|string',
-            'category_id'=>'required|exists:categories,id',
-            'price' => 'required|numeric',
-            'immage' => 'nullable|image|mimes:jpeg,png,jpg,gif',
+            'category_id' => 'required|integer|min:1|max:10',
+            'price' => 'required|numeric|min:0',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Adjust validation rules as needed
             'description' => 'nullable|string',
-            ]) ;
-            $product = Products::create($validateDate);
-       return response()->json(['product'=>$product]);
+        ]);
+
+        // Handle image upload
+        $imageName = time().'.'.$request->image->extension();  
+        $request->image->move(public_path('images'), $imageName);
+
+        // Create new product
+        $product = Products::create([
+            'name' => $request->name,
+            'category_id' => $request->category_id,
+            'price' => $request->price,
+            'image' => $imageName, // Assuming 'image' column stores the filename
+            'description' => $request->description,
+        ]);
+
+        return response()->json(['message' => 'Product created successfully', 'product' => $product], 201);
     }
 
     //view all product
     public function ViewProduct(){
-        $product = Products::all();
-        return response()->json(['product'=>$product]);
+        $products = Products::all();
+        return response()->json(['products' => $products]);
     }
 
     //view product by id

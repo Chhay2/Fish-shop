@@ -39,5 +39,5 @@ Route::post('/InsertProduct',[ProdutController::class,'InsertProduct']);
 
 Route::get('/viewproductbyID/{id}',[ProdutController::class,'getProductbyID']);
 Route::get('/ViewProduct',[ProdutController::class,'ViewProduct']);
-Route::put('/products/{id}', [ProdutController::class, 'updateProduct']);
-Route::delete('/products/{id}', [ProdutController::class, 'deleteProduct']);
+Route::put('/updateproducts/{id}', [ProdutController::class, 'updateProduct']);
+Route::delete('/deleeteproducts/{id}', [ProdutController::class, 'deleteProduct']);

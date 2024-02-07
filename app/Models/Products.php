@@ -8,11 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Products extends Model
 {
     use HasFactory;
-    public $fillable =[
-        "name",
-        "category_id",
-        "price",
-            "immage",
-            "description",
+    protected $fillable = [
+        'name',
+        'category_id',
+        'price',
+        'image',
+        'description',
+    ];
+
+    // If 'image' is a JSON column, cast it to array
+    protected $casts = [
+        'image' => 'array',
     ];
 }
